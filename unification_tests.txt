@@ -1,0 +1,20 @@
+G(x, John)
+G(Albert, John)
+
+G(John)
+G(John)
+
+G(John)
+G(Mark)
+
+~G(x)
+G(John)
+
+~G(y)
+G(John)
+
+G(x,y,John)
+G(Albert, z, John)
+
+G(x,y,John)
+G(Albert, z,Mark)

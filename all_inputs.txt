@@ -1,0 +1,11 @@
+1
+F(John)
+2
+F(x) | ~G(x)
+G(John)
+
+1
+F(John)
+2
+F(x) | ~G(y)
+G(John)
