@@ -1,4 +1,4 @@
-from resolution import *
+from homework3 import *
 
 
 def function_parse():
@@ -30,15 +30,29 @@ def function_unification(e=None):
         e=len(data)
     for d in data[0:e]:
         x,y = d.split('\n')
-        x = parse(x)[0]
-        y = parse(y)[0]
+        x = parse(x).predicates[0]
+        y = parse(y).predicates[0]
         print(x, y)
         print(unification(x, y, {}))
+
+# def function_equality():
+inp="H(John) | G(John)"
+s1 = parse(inp)
+s2 = parse(inp)
+
+# print(s1, s2)
+visited = {str(get_ordered_sentence(s1))}
+print(str(get_ordered_sentence(s2)) in visited)
+# print(s1 == s2)
+# p = s1.predicates
+# print(p.sort())
 
 
 def methods():
     # function_is_constant()
     # function_parse()
-    function_unification()
-methods()
-# print(is_constant("John"))
+    function_unification(1)
+# methods()
+# print(is_variable("Joe"))
+# print(isinstance(Variable("Joe"), Constant))
+

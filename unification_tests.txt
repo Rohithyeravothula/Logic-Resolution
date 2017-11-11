@@ -1,3 +1,6 @@
+G(Joe)
+G(x)
+
 G(x, John)
 G(Albert, John)
 
