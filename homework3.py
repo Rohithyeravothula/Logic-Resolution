@@ -1,6 +1,10 @@
 import re
 import copy
 from collections import deque
+import time
+
+# ToDo: make sure this is 60
+time_limit = 1*60 # 1 minute of each query
 
 
 class Predicate:
@@ -109,6 +113,12 @@ class KB:
                     else:
                         self.kb[func.func] = TableValues([sent], [])
 
+    def __str__(self):
+        return str(self.kb)
+
+    def __repr__(self):
+        return str(self)
+
     def print_kb(self):
         for k in self.kb:
             print(k)
@@ -209,7 +219,6 @@ def unify_variable(var, x, z):
     elif x in z:
         return unification(var, z[x], z)
     else:
-        # ToDo: implement occur check
         z[var] = x
         return z
 
@@ -332,6 +341,7 @@ def pick_next(stack):
             min_args = len(stack[i])
             min_res = i
     r = stack[min_res]
+    # print(stack, min_res)
     del stack[min_res]
     return r
 
@@ -352,7 +362,10 @@ def resolve(question, knowledgebase):
     ans = False
     iteration = 0
     iteration_limit = 4000
+    start_time = time.time()
     while len(resolution_queue) != 0 and iteration < iteration_limit:
+        if time.time() - start_time >= time_limit:
+            break
         # if iteration % 10 == 0:
         #     print("done {} iterations".format(iteration))
         iteration += 1
@@ -360,11 +373,15 @@ def resolve(question, knowledgebase):
         # unif_x, x_rest = current[0], current[1:]
         current_length = len(current)
         for i in range(0, current_length):
+
             unif_x = current[i]
             x_rest = current[0:i] + current[i + 1:]
 
             resolve_sentences = search_resolver(knowledgebase.kb, unif_x.func, not unif_x.negation)
+            # print("knowledgebase: {}".format(knowledgebase))
+            # print("resolution sentences: {}".format(resolve_sentences))
             for resolver in resolve_sentences:
+
                 resolver_predicates = resolver.predicates
                 resolver_length = len(resolver_predicates)
                 for resolver_index in range(0, resolver_length):
@@ -423,10 +440,13 @@ def main():
     # kb.print_kb()
     answers = []
     for query in query_predicates:
-        kb_copy = copy.deepcopy(kb)
-        # print(query)
-        answers.append(resolve(query, kb_copy))
-    # write_output(answers)
+        try:
+            kb_copy = copy.deepcopy(kb)
+            # print(query)
+            answers.append(resolve(query, kb_copy))
+        except:
+            answers.append(False)
+    write_output(answers)
     # print(answers)
     return answers
 
@@ -435,5 +455,4 @@ if __name__ == '__main__':
     main()
 
 
-# ToDo: add timeout and fail false case
 # ToDo: check test case where ans is masked inside the KB

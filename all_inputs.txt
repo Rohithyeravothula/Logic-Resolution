@@ -3,9 +3,280 @@ F(John)
 2
 F(x) | ~G(x)
 G(John)
+TRUE
 
 1
 F(John)
 2
 F(x) | ~G(y)
 G(John)
+TRUE
+
+6
+F(Joe)
+H(John)
+~H(Alice)
+~H(John)
+G(Joe)
+G(Tom)
+14
+~F(x) | G(x)
+~G(x) | H(x)
+~H(x) | F(x)
+~R(x) | H(x)
+~A(x) | H(x)
+~D(x,y) | ~H(y)
+~B(x,y) | ~C(x,y) | A(x)
+B(John,Alice)
+B(John,Joe)
+~D(x,y) | ~Q(y) | C(x,y)
+D(John,Alice)
+Q(Joe)
+D(John,Joe)
+R(Tom)
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+TRUE
+
+2
+Ancestor(Liz,Billy)
+Ancestor(Liz,Joe)
+6
+Mother(Liz,Charley)
+Father(Charley,Billy)
+~Mother(x,y) | Parent(x,y)
+~Father(x,y) | Parent(x,y)
+~Parent(x,y) | Ancestor(x,y)
+~Parent(x,y) | ~Ancestor(y,z) | Ancestor(x,z)
+TRUE
+FALSE
+
+1
+Criminal(West)
+6
+~American(x) | ~Weapon(y) | ~Sells(x,y,z) | ~Enemy(z,America) | Criminal(x)
+Owns(Nono,M1)
+Missile(M1)
+~Missile(x) | ~Owns(Nono,x) | Sells(West,x,Nono)
+~Missile(x) | Weapon(x)
+Enemy(Nono,America)
+FALSE
+
+1
+Criminal(West)
+6
+~American(x) | ~Weapon(y) | ~Sells(x,y,z) | ~Enemy(z,America) | Criminal(x)
+Owns(Nono,M1)
+Missile(M1)
+~Missile(x) | ~Owns(Nono,x) | Sells(West,x,Nono)
+~Missile(x) | Weapon(x)
+Enemy(Nono,America)
+American(West)
+TRUE
+
+1
+Ancestor(Liz, Billy)
+6
+Mother(Liz, Charley)
+Father(Charley, Billy)
+~Mother(x,y) | Parent(x,y)
+~Father(x,y) | Parent(x,y)
+~Parent(x,y) | Ancestor(x,y)
+~Parent(x,y) | ~Ancestor(y,z) | Ancestor(x,z)
+TRUE
+
+1
+A(Alice)
+3
+C(z)|~B(x)|A(y)
+B(West)
+~C(z)
+TRUE
+
+1
+A(John)
+2
+A(x)
+~A(x) | B(John)
+TRUE
+
+1
+B(John,Alice)
+2
+A(x,y,Bob)|B(x,Alice)|B(y,Alice)
+~A(x,John,Bob)
+TRUE
+
+1
+G(Joe)
+5
+~F(x) | G(x)
+~G(x) | H(x)
+~H(x) | F(x)
+~R(x) | H(x)
+R(Tom)
+G(Joe)
+TRUE
+
+2
+S(S)
+~S(S)
+7
+S(x)|M(x)
+~M(x)|~L(x,R)
+~S(x)|L(x,S)
+~L(T,x)|~L(E,x)
+L(T,x)|L(E,x)
+L(T,R)
+L(T,S)
+FALSE
+FALSE
+
+2
+F(A)
+~F(A)
+8
+~B(x)|~C(x)|H(x)
+~B(x)|~S(x)|G(x)|E(x)
+~E(x)|F(x)|C(o)
+H(x)
+B(x)
+S(x)
+~G(x)
+~C(x)
+TRUE
+FALSE
+
+1
+G(Joe)
+3
+~F(x) | G(x)
+~G(x) | H(x)
+~H(x) | F(x)
+FALSE
+
+1
+A(John, David)
+1
+A(x,x) | B(x)
+FALSE
+
+1
+B(John,Alice)
+2
+A(x,y,Bob) | B(x,Alice) | B(y,Alice)
+~A(x,John,Bob)
+TRUE
+
+1
+Kills(Curiosity, Tuna)
+7
+Dog(D)
+Owns(Jack,D)
+~Dog(y) | ~Owns(x,y) | AnimalLover(x)
+~AnimalLover(w) | ~Animal(y) | ~Kills(w,y)
+Kills(Jack, Tuna) | Kills(Curiosity, Tuna)
+Cat(Tuna)
+~Cat(z) | Animal(z)
+TRUE
+
+2
+F(A)
+~F(A)
+8
+~B(x)|~C(x)|H(x)
+~B(x)|~S(x)|G(x)|E(x)
+~E(x)|F(x)|C(o)
+H(x)
+B(x)
+S(x)
+~G(x)
+~C(x)
+TRUE
+FALSE
+
+10
+F(B,A)
+A(John)
+CC(Tom)
+T(C)
+T(B)
+Criminal(West)
+GA(Add)
+TS(A)
+TS(T)
+SEE(Bob)
+31
+~G(x,y) | F(y,x)
+~F(S,SS)|G(x,y)
+G(SS,S)
+ ~B(x) | ~C(x) |A(x)
+B(John)
+~D(x) | C(x)
+~C(x) | D(x)
+~AA(x,John) | ~BB(Bob) | CC(Tom)
+BB(Bob)
+AA(Bob,John)
+~T(A) |T(B)
+T(A)
+~T(x) |T(C)
+~American(x)|~Weapon(y)|~Sells(x,y,z)|~Hostile(z)|Criminal(x)
+Owns(Nono,MONE)
+Missile(MONE)
+Missile(x) | Owns(Nono,x)|Sells(West,x,Nono)
+~Missile(x) | Weapon(x)
+~Enemy(x,America) | Hostile(x)
+American(West)
+Enemy(Nono,America)
+~FA(y,y,x) |~RA(z) |GA(z)
+~AB(x,y,z) | FA(x,y,y)
+AB(Random,Sub,Randomm)
+RA(Add)
+~Test(x,x) | TS(A)
+Test(B,BB)
+~Test(x,y) | TS(T)
+~SE(x) | SEE(x)
+~SEEE(x) | SE(x)
+SEEE(Bob)
+TRUE
+FALSE
+TRUE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+
+6
+F(Bob)
+H(John)
+~H(Alice)
+~H(John)
+G(Bob)
+G(Tom)
+14
+~A(x)|H(x)
+~D(x,y)|~H(y)
+~B(x,y)|~C(x,y)|A(x)
+B(John,Alice)
+B(John,Bob)
+~D(x,y)|~Q(y)|C(x,y)
+D(John,Alice)
+Q(Bob)
+D(John,Bob)
+~F(x)|G(x)
+~G(x)|H(x)
+~H(x)|F(x)
+~R(x)|H(x)
+R(Tom)
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+TRUE

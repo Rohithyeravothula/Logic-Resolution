@@ -21,3 +21,18 @@ G(Albert, z, John)
 
 G(x,y,John)
 G(Albert, z,Mark)
+
+H(x)
+H(y)
+
+H(x,z)
+H(A,B)
+
+H(x,A)
+H(z,z)
+
+H(A,B)
+H(A,A)
+
+H(A,B)
+H(A,B)

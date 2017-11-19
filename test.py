@@ -35,24 +35,34 @@ def function_unification(e=None):
         print(x, y)
         print(unification(x, y, {}))
 
-# def function_equality():
-inp="H(John) | G(John)"
-s1 = parse(inp)
-s2 = parse(inp)
 
-# print(s1, s2)
-visited = {str(get_ordered_sentence(s1))}
-print(str(get_ordered_sentence(s2)) in visited)
-# print(s1 == s2)
-# p = s1.predicates
-# print(p.sort())
+def bool_to_string(a):
+    return list(map(lambda x: str(x).upper(), a))
 
 
-def methods():
-    # function_is_constant()
-    # function_parse()
-    function_unification(1)
-# methods()
-# print(is_variable("Joe"))
-# print(isinstance(Variable("Joe"), Constant))
+def full_test(e=None):
+    f=open("all_inputs.txt")
+    data=f.read().split("\n\n")
+    f.close()
+    if e is None:
+        e = len(data)
+    count = 1
+    for raw_case in data[-1*e:]:
+        print("testing case {}".format(count))
+        case = raw_case.split("\n")
+        queries = int(case[0])
+        ans = list(map(lambda x:x.upper(), case[-1*queries:]))
+        inp = case[:-1*queries]
+        f=open("input.txt", 'w')
+        f.write("\n".join(inp))
+        f.close()
+        output = bool_to_string(main())
+        if ans == output:
+            print("success")
+        else:
+            print("fail")
+            print(raw_case)
+        count += 1
 
+
+full_test()
