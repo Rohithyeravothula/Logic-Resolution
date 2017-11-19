@@ -75,7 +75,6 @@ class Sentence:
         return str.__hash__(str(self))
 
 
-
 """
 functions table => 
 key = function
@@ -85,6 +84,7 @@ val =>
 
 while choosing to resolve choose function with minimum variables
 """
+
 
 class TableValues():
     def __init__(self, positives, negatives):
@@ -158,7 +158,7 @@ def strip_spaces(inp_list):
     :param inp_list: 
     :return: 
     """
-    l=len(inp_list)
+    l = len(inp_list)
     for i in range(0, l):
         inp_list[i] = inp_list[i].strip()
 
@@ -224,9 +224,9 @@ def unification(x, y, z):
     """
     if z is None:
         return None
-    elif x == y: # ToDo: define comparision for classes
+    elif x == y:  # ToDo: define comparision for classes
         return z
-    elif x.__class__ == Constant and y.__class__ == Constant and x!=y:
+    elif x.__class__ == Constant and y.__class__ == Constant and x != y:
         return None
     elif x.__class__ == Variable:
         return unify_variable(x, y, z)
@@ -243,15 +243,16 @@ def unification(x, y, z):
 def build_predicates():
     f = open("input.txt")
     data = f.readlines()
+    f.close()
 
     queries = []
     query_count = int(data[0])
-    query_strings = data[1:query_count+1]
+    query_strings = data[1:query_count + 1]
     for q in query_strings:
         queries.append(parse(q))
 
-    kb=[]
-    kb_strings = data[query_count+2:]
+    kb = []
+    kb_strings = data[query_count + 2:]
     for k in kb_strings:
         kb.append(parse(k))
 
@@ -281,7 +282,7 @@ def substitute(predicates, substitution):
     subs_functions = []
     # print("substitution: {}".format(substitution), predicates)
     for funks in predicates:
-        subs_args=[]
+        subs_args = []
         for var in funks.args:
             if var in substitution:
                 subs_args.append(substitution[var])
@@ -291,23 +292,25 @@ def substitute(predicates, substitution):
     return subs_functions
 
 
-def divide_function(sentence, left_func):
-    # print("hello", sentence, left_func)
-    func = []
-    y = None
-    for i in sentence.predicates:
-        if i.func == left_func.func and i.negation != left_func.negation:
-            y = i
-        else:
-            func.append(i)
-    return y, func
+# def divide_function(sentence, left_func):
+#     # print("hello", sentence, left_func)
+#     func = []
+#     y = None
+#     count = 0
+#     for i in sentence.predicates:
+#         if i.func == left_func.func and i.negation != left_func.negation and count == 0:
+#             y = i
+#             count += 1
+#         else:
+#             func.append(i)
+#     return y, func
 
 
 def reduce_cycles(substitution):
     if substitution is not None:
         count = 1
         cycle_limit = 100
-        while count<cycle_limit:
+        while count < cycle_limit:
             exists = False
             for k in substitution:
                 if substitution[k] in substitution:
@@ -316,14 +319,15 @@ def reduce_cycles(substitution):
             if not exists:
                 break
 
+
 def pick_next(stack):
     if len(stack) == 0:
         return None
     min_args = len(stack[0])
     min_res = 0
-    l = len(stack)
-    for i in range(0, l):
-        # fix this
+    stack_length = len(stack)
+    for i in range(0, stack_length):
+        # ToDo: fix this
         if min_args > len(stack[i]):
             min_args = len(stack[i])
             min_res = i
@@ -339,69 +343,78 @@ def get_ordered_sentence(sentence):
     return Sentence(pred)
 
 
-
-
 def resolve(question, knowledgebase):
     query_predicate = question.predicates[0]
     query_predicate.negate()
     knowledgebase.tell(Sentence(question.predicates))
-    resolution_queue = deque([question.predicates]) # stack contains predicates in list form and not sentence form
+    resolution_queue = deque([question.predicates])  # stack contains predicates in list form and not sentence form
     visited = {str(question)}
     ans = False
     iteration = 0
     iteration_limit = 4000
     while len(resolution_queue) != 0 and iteration < iteration_limit:
+        # if iteration % 10 == 0:
+        #     print("done {} iterations".format(iteration))
         iteration += 1
         current = pick_next(resolution_queue)
         # unif_x, x_rest = current[0], current[1:]
         current_length = len(current)
         for i in range(0, current_length):
             unif_x = current[i]
-            x_rest = current[0:i] + current[i+1:]
+            x_rest = current[0:i] + current[i + 1:]
 
             resolve_sentences = search_resolver(knowledgebase.kb, unif_x.func, not unif_x.negation)
             for resolver in resolve_sentences:
-                unif_y, y_rest = divide_function(resolver, unif_x)
-                substitution = unification(unif_x, unif_y, {})
-                reduce_cycles(substitution)
-                # print("unification: {} {} {} {} {}".format(current, resolver, unif_x, unif_y, substitution))
-                if substitution is not None and len(x_rest) == 0 and len(y_rest) == 0:
-                    ans = True
-                    break
-                elif substitution is not None:
-                    resolved = substitute(list(set(x_rest + y_rest)), substitution)
-                    # print("resolved: {}".format(resolved))
-                    resolved_sentence = Sentence(resolved)
-                    resolved_sentence_str = str(get_ordered_sentence(resolved_sentence))
-                    if resolved_sentence_str not in visited:
-                        resolution_queue.append(resolved)
-                        knowledgebase.tell(resolved_sentence)
-                        visited.add(resolved_sentence_str)
-                    # else:
-                    #     print("<<<<<<<<<<<< found in visited {}".format(resolved_sentence))
-                    # print("current stack: {} ".format(resolution_queue))
-                    # print("current visited: {}".format(visited))
-                    # ToDo: write custom method to fix duplicates, this is very slow
+                resolver_predicates = resolver.predicates
+                resolver_length = len(resolver_predicates)
+                for resolver_index in range(0, resolver_length):
+                    if resolver_predicates[resolver_index].func == unif_x.func and resolver_predicates[resolver_index].negation != unif_x.negation:
+                        unif_y = resolver_predicates[resolver_index]
+                        y_rest = resolver_predicates[0:resolver_index] + resolver_predicates[resolver_index+1:resolver_length]
+
+                        # unif_y, y_rest = divide_function(resolver, unif_x)
+                        substitution = unification(unif_x, unif_y, {})
+                        reduce_cycles(substitution)
+                        # print("unification: {} {} {} {} {}".format(current, resolver, unif_x, unif_y, substitution))
+                        if substitution is not None and len(x_rest) == 0 and len(y_rest) == 0:
+                            ans = True
+                            break
+                        elif substitution is not None:
+                            resolved = substitute(list(set(x_rest + y_rest)), substitution)
+                            # print("resolved: {}".format(resolved))
+                            resolved_sentence = Sentence(resolved)
+                            resolved_sentence_str = str(get_ordered_sentence(resolved_sentence))
+                            if resolved_sentence_str not in visited:
+                                resolution_queue.append(resolved)
+                                knowledgebase.tell(resolved_sentence)
+                                visited.add(resolved_sentence_str)
+                                # else:
+                                #     print("<<<<<<<<<<<< found in visited {}".format(resolved_sentence))
+                                # print("current stack: {} ".format(resolution_queue))
+                                # print("current visited: {}".format(visited))
+                    if ans:
+                        break
             if ans:
                 break
         if ans:
             break
-        # print(len(resolution_stack), iteration)
-        # print("\n\n")
+            # print(len(resolution_queue), iteration)
+            # print("\n\n")
     # print("ans found: {}".format(ans)
     return ans
 
 
 def write_output(answers):
-    f=open("output.txt", 'w')
-    s=""
+    f = open("output.txt", 'w')
+    s = ""
     for a in answers:
         if a:
-            s+="TRUE\n"
+            s += "TRUE\n"
         else:
-            s+="FALSE\n"
-    s=s[:-1]
+            s += "FALSE\n"
+    s = s[:-1]
     f.write(s)
+    f.close()
 
 
 def main():
@@ -413,9 +426,14 @@ def main():
         kb_copy = copy.deepcopy(kb)
         # print(query)
         answers.append(resolve(query, kb_copy))
-    write_output(answers)
-
+    # write_output(answers)
+    # print(answers)
+    return answers
 
 
 if __name__ == '__main__':
     main()
+
+
+# ToDo: add timeout and fail false case
+# ToDo: check test case where ans is masked inside the KB
