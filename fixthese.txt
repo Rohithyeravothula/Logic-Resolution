@@ -1,0 +1,118 @@
+1
+P(Joe, Mary)
+2
+P(x,y) | P(a,b) | ~A(x)
+A(y) | ~P(c,d)
+
+
+2
+~Date(Mary,John)
+Date(Mary,Bill)
+11
+~Buy(x)|Rabbit(y)|Grocery(y)
+~Buy(x)|Owns(x,y)
+~Dog(x)|Rabbit(y)
+~Dog(x)|Chase(x,y)
+Buy(Mary)
+~Owns(x,y)|~Rabbit(y)|~Rabbit(w)|~Chase(z,w)|Hates(x,z)
+Dog(x)
+Owns(John,x)
+~Owns(y,z) |~Hates(x,z)|~Date(x,y)
+Grocery(G)
+~Owns(Mary,G)
+
+
+4
+C(PHD, PHD)
+C(MS, MS)
+C(EE, EE)
+C(CS, CS)
+5
+~A(x,y) | ~B(z,w) | C(x,w)
+~C(y,x) | A(x,y)
+~C(x,y) | B(y,x)
+A(EE, CS)
+B(MS, PHD)
+
+2
+Conservative(Clem)
+~Conservative(Stan)
+12
+~Austinite(x)|Conservative(x)|Armadillo(y)
+~Austinite(x)|Conservative(x)|Loves(x,y)
+~Wears(x)|Aggie(x)
+~Aggie(x)|~Dog(y)|Loves(x,y)
+Loves(x,z)
+Armadillo(z)
+~Loves(x,y)
+Dog(y)
+Austinite(Clem)
+Wears(Clem)
+~Wears(Stan)
+Austinite(Stan)
+
+[1:06 AM, 11/20/2017] +1 (213) 357-7976: 2
+Frustrated(Coy)
+Frustrated(Bill)
+11
+~Coyote(x) | Roadrunner(y)
+~Coyote(x) | Chase(x,y)
+~Roadrunner(x) | ~Beep(x) | Smart(x)
+~Coyote(x) | ~Roadrunner(y) | ~Smart(y) | ~Catch(x,y)
+~Coyote(x) | ~Roadrunner(y) | ~Chase(x,y) | Catch(x,y) | Frustrated(x)
+~Roadrunner(x) | Beep(x)
+Beep(RR)
+Coyote(Coy)
+~Coyote(Bill)
+Roadrunner(RR)
+Roadrunner(RRtwo)
+
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+TRUE
+TRUE
+FALSE
+TRUE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
